@@ -92,5 +92,25 @@ def calcular_siguiente_generacion(tablero):
     Devuelve:
         Una nueva lista de listas que representa el tablero en la siguiente generación.
     """
+    filas = len(tablero)
+    columnas = len(tablero[0])
+
+    res = []
+    for k in range(filas):
+        fila = [False] * columnas
+        res.append(fila)
+    
+    for i in range(filas):
+        for j in range(columnas):
+            vecinos_vivos = contar_vecinos(tablero, i, j)
+            # Celda viva
+            if tablero[i][j]:
+                # Supervivencia: sigue viva si tiene 2 o 3 vecinas vivas
+                res[i][j] = vecinos_vivos in (2, 3)
+            else:
+                # Nacimiento: una celda muerta revive si tiene exactamente 3 vecinas vivas
+                res[i][j] = vecinos_vivos == 3
+
+    return res
     # TODO: Ejercicio 5
-    pass
+
